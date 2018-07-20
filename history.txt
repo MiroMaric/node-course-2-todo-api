@@ -1,0 +1,11 @@
+destructuring(DESTRUKTUIRANJE)
+
+var person = {
+    name:'Miko',
+    age:21
+};
+var {age} = person;
+console.log(age);
+
+_id sadrzi vreme kao nacin za identifikaciju
+console.log(result.ops[0]._id.getTimestamp());
