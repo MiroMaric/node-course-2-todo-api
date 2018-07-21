@@ -1,12 +1,15 @@
 const expect = require('expect');
 const request = require('supertest');
+const {ObjectID} = require('mongodb');
 
 const {Todo} = require('./../models/todo');
 const {app} = require('./../server');
 
 var todos = [{
+    _id:new ObjectID(),
     text:'Pick up tickets for Halid show!'
 },{
+    _id:new ObjectID(),
     text:'Go to toalet'
 }];
 
@@ -70,4 +73,34 @@ describe('GET /todos',()=>{
             expect(res.body.todos.length).toBe(2);
         });
     });
+});
+
+describe('GET /todos:id',()=>{
+    it('Should return todo doc',(done)=>{
+        request(app)
+            .get(`/todos/${todos[0]._id.toHexString()}`)
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.text).toEqual(todos[0].text);
+            }).end(done);
+    })
+
+    it('Should return 400 if path not valid',(done)=>{
+        request(app)
+            .get('/todos/0000000000')
+            .expect(400)
+            .expect((res)=>{
+                expect(res.body).toEqual({});
+            }).end(done);
+    });
+
+    it('Should return 404 id todo doc is not found',(done)=>{        
+        request(app)
+            .get(`/todos/${new ObjectID().toHexString()}`)
+            .expect(404)
+            .expect((res)=>{
+                expect(res.body).toEqual({});
+            }).end(done);
+    });
+
 });
