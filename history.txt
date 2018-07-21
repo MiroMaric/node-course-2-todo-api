@@ -9,3 +9,38 @@ console.log(age);
 
 _id sadrzi vreme kao nacin za identifikaciju
 console.log(result.ops[0]._id.getTimestamp());
+
+-------------------------------------------------
+INTRO IN MONGOOSE
+-------------------------------------------------
+var newTodo = new Todo({
+    text:'Cook dinner'
+});
+
+newTodo.save().then((doc)=>{
+    console.log('Todo is saved: ',doc);
+},(err)=>{
+    console.log('Unable to save document: ',err);
+});
+
+var newTodo = new Todo({
+    text:'Learn NodeJS',
+    completed:true
+});
+
+newTodo.save().then((res)=>{
+    console.log(res);
+},(err)=>{
+    console.log(err);
+});
+
+var newUser = User({
+    email:'miromaric1996@gmail.com',
+    password:'miko123miko'
+});
+
+newUser.save().then((res)=>{
+    console.log(res);
+},(err)=>{
+    console.log(err);
+})
