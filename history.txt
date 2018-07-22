@@ -44,3 +44,17 @@ newUser.save().then((res)=>{
 },(err)=>{
     console.log(err);
 })
+
+--------------------------------------
+PODESAVANJE ZA UPLOAD NA HEROKU SERVER
+---------------------------------------
+package.json
+dodavanje:
+"start":"node server/server.js" -> da heroku zna kako treba da startuje nasu aplikaciju
+"engines":{
+    "node":"8.9.4"
+} -> da heroku zna koja je verzija naseg node-a!
+
+heroku create ->kreiramo aplikaciju
+heroku addons:create mongolab:sandbox ->instaliranje 
+heroku config -> dobijamo URI nase mongodb baze podataka
