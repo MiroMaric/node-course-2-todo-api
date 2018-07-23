@@ -10,7 +10,9 @@ var todos = [{
     text:'Pick up tickets for Halid show!'
 },{
     _id:new ObjectID(),
-    text:'Go to toalet'
+    text:'Go to toalet',
+    completed:true,
+    completedAt : 0
 }];
 
 //Pokrece se pre svakog testa
@@ -140,6 +142,40 @@ describe('DELETE /todos/:id',()=>{
             .expect(404)
             .expect((res)=>{
                 expect(res.body).toEqual({});
+            }).end(done);
+    });
+});
+
+describe('PATCH todos/:id',()=>{
+    it('Should update the todo',(done)=>{
+        request(app)
+            .patch(`/todos/${todos[0]._id}`)
+            .send({
+                completed:true
+            })
+            .expect(200)
+            .expect((res)=>{
+                Todo.findById(todos[0]._id).then((todo)=>{
+                    expect(res.body.todo.text).toBe(todos[0].text);
+                    expect(res.body.todo.completed).toBe(true);
+                    expect(res.body.todo.completedAt).toBeA('number');
+                });
+            }).end(done);
+    });
+
+    it('Should clear completedAt when todo is not completed',(done)=>{
+        request(app)
+            .patch(`/todos/${todos[1]._id}`)
+            .send({
+                completed:false,
+            })
+            .expect(200)
+            .expect((res)=>{
+                Todo.findById(todos[0]._id).then((todo)=>{
+                    expect(res.body.todo.text).toBe(todos[1].text);
+                    expect(res.body.todo.completed).toBe(true);
+                    expect(res.body.todo.completedAt).toNotExist();
+                });
             }).end(done);
     });
 });
