@@ -58,3 +58,9 @@ dodavanje:
 heroku create ->kreiramo aplikaciju
 heroku addons:create mongolab:sandbox ->instaliranje 
 heroku config -> dobijamo URI nase mongodb baze podataka
+git status
+git add .
+git commit -m "..."
+git push
+git push heroku master
+heroku logs -> provera

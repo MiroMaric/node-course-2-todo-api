@@ -42,10 +42,26 @@ app.get('/todos/:id',(req,res)=>{
             }else{
                 res.send(doc);
             }
-
         }).catch((err)=>{
             res.status(404).send({});
             console.log(err);
+        });
+    }
+});
+
+app.delete('/todos/:id',(req,res)=>{
+    var id = req.params.id;
+    if(!ObjectID.isValid(id)){
+        res.status(400).send({message:'Bad syntax'});
+    }else{
+        Todo.findOneAndRemove(id).then((todo)=>{
+            if(!todo){
+                res.status(404).send({message:'Not find id'});
+            }else{
+                res.send({todo});
+            }
+        }).catch((e)=>{
+            res.status(404).send(e);
         });
     }
 });
