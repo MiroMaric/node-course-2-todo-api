@@ -52,11 +52,11 @@ app.get('/todos/:id',(req,res)=>{
 app.delete('/todos/:id',(req,res)=>{
     var id = req.params.id;
     if(!ObjectID.isValid(id)){
-        res.status(400).send({message:'Bad syntax'});
+        res.status(400).send();
     }else{
-        Todo.findOneAndRemove(id).then((todo)=>{
+        Todo.findByIdAndRemove(id).then((todo)=>{
             if(!todo){
-                res.status(404).send({message:'Not find id'});
+                res.status(404).send();
             }else{
                 res.send({todo});
             }
