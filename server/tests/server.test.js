@@ -65,7 +65,6 @@ describe('POST /todos',()=>{
             })
     });
 });
-
 describe('GET /todos',()=>{
     it('Should get all todos',()=>{
         request(app)
